@@ -1,0 +1,9 @@
+# Ignore __pycache__ directories in specific folders
+/gamma/**/__pycache__/
+/maestro/**/__pycache__/
+/hardware_performance/**/__pycache__/
+
+# Also ignore common Python cache files
+*.py[cod]
+*$py.class
+__pycache__/

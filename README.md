@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Package Performance LLM
 
 This repository contains code for evaluating hardware performance for large language models (LLMs).
@@ -41,3 +42,6 @@ python run.py
 The `run.py` script will evaluate the performance of various hardware configurations for running LLMs. Results will be output to the terminal and saved to the specified output directory.
 
 
+=======
+# package_performance_llm
+>>>>>>> 6507447 (Remove submodule link and add as regular files)
