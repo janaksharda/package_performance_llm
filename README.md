@@ -23,7 +23,7 @@ cd package_performance_llm
 2. Create and activate the conda environment using the provided environment file:
 ```bash
 conda env create -f env.yaml
-conda activate performance_llm
+conda activate env
 ```
 
 3. Navigate to the hardware performance directory:
