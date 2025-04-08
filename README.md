@@ -77,7 +77,3 @@ If you use this work, please cite the following papers:
     year      = {2020},
 }
 ```
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
