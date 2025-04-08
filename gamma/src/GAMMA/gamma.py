@@ -1022,7 +1022,7 @@ class GAMMA(object):
                 return None, None, None, None, None, None
             return self.judge(), activity_count, arrange_pandas_df(df), pe_utilization, chiplet_str, package_str
         except Exception as e:
-            print("Error in GAMMA:", e)
+            # print("Error in GAMMA:", e)
             return None, None, None, None, None, None
 
     def impose_halloffame(self, observe_value, target="latency_ave" ):

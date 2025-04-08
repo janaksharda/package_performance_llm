@@ -108,11 +108,10 @@ def train_model(model_defs, input_arg, map_cstr=None, chkpt_file='./chkpt'):
                                 store_input=store_input[i], store_weight=store_weight[i], store_output_l2=store_output_l2[i], store_input_l2=store_input_l2[i], store_weight_l2=store_weight_l2[i])
                 # env_list[i].reset_dimension(fitness=fitness, constraints=constraints, dimension=dimension)
                 # env_list[i].reset_hw_parm(num_pe=opt.num_pe, l1_size=opt.l1_size, l2_size=opt.l2_size, pe_limit=opt.pe_limit,area_pebuf_only=False, external_area_model=True)
-            print("assigned bw: ", env_list[i].NocBW, env_list[i].offchipBW)
+            
             chkpt, pops = env_list[i].run(dimension, stage_idx=0, num_population=opt.num_pop, prev_stage_value=None, num_generations=num_gen,
                                     best_sol_1st=None, init_pop=None, bias=None, uni_base=True, use_factor=opt.use_factor, use_pleteau=False, df_list=df_list)
             df_list[i] = env_list[i].best_df
-            print("Actual BW: ", df_list[i][0][" Offchip BW Req (Elements/cycle)"], df_list[i][0][" NoC BW Req (Elements/cycle)"])
             
             best_sol = chkpt["best_sol"]
             if (k == epochs - 1) and (j == len(model_defs) - 1):
@@ -123,10 +122,13 @@ def train_model(model_defs, input_arg, map_cstr=None, chkpt_file='./chkpt'):
             layer_latency, best_runtime, best_energy, best_area, best_pe_util, noc_bw, dram_bw, l2_size = observation
             pe_util_list[i] = best_pe_util
             # print("Mapping:", chkpt["best_sol"])
-            print("Epoch:", k, "Layer:", i, "NoC BW:", noc_bw, " DRAM BW:", dram_bw)
-            print("Epoch:", k, "Layer:", i, "NoC BW:", df_list[i][0][" NoC BW Req (Elements/cycle)"], " DRAM BW:", df_list[i][0][" Offchip BW Req (Elements/cycle)"])
-            print(f"Reward: {chkpt['best_reward'][0]:.3e}, Runtime: {best_runtime:.0f}(cycles), Area: {best_area:.3f}, Energy: {best_energy.to(u.mJ):.3e}, PE Util: {best_pe_util:.3f}")
-        
+            if k % 5 == 0 and j == 0:
+                print("Assigned bw: ", env_list[i].NocBW, env_list[i].offchipBW)
+                print("Actual BW: ", df_list[i][0][" Offchip BW Req (Elements/cycle)"], df_list[i][0][" NoC BW Req (Elements/cycle)"])
+                print("Epoch:", k, "Layer:", i, "NoC BW:", noc_bw, " DRAM BW:", dram_bw)
+                print("Epoch:", k, "Layer:", i, "NoC BW:", df_list[i][0][" NoC BW Req (Elements/cycle)"], " DRAM BW:", df_list[i][0][" Offchip BW Req (Elements/cycle)"])
+                print(f"Reward: {chkpt['best_reward'][0]:.3e}, Runtime: {best_runtime:.0f}(cycles), Area: {best_area:.3f}, Energy: {best_energy.to(u.mJ):.3e}, PE Util: {best_pe_util:.3f}")
+                print("_________________________________________________________________________________________")
             if k > 0 and  j == 0 and k < epochs - 25:
                 break
         ## save df_list in a single file, filepath = '../../../hardware_performance/final_soln.csv'
@@ -155,7 +157,7 @@ def train_model(model_defs, input_arg, map_cstr=None, chkpt_file='./chkpt'):
             final_df.to_csv(filepath, index=False)
 
 
-        print("_________________________________________________________________________________________")
+        
         # chkpt = {
         #     "reward":chkpt['best_reward'][0],
         #     "best_sol":best_sol,
