@@ -40,6 +40,4 @@ python run.py
 
 The `run.py` script will evaluate the performance of various hardware configurations for running LLMs. Results will be output to the terminal and saved to the specified output directory.
 
-## License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
